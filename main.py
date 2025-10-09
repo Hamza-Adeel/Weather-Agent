@@ -50,12 +50,12 @@ async def Weather_input_guardrail(ctx, agent, input_text) -> GuardrailFunctionOu
     # Run the guardrail check
     result = await Runner.run(guardrail_agent, input_text, run_config=config)
 
-    # If not poetry-related → trigger tripwire
-    is_poetry = result.final_output.isWeatherRelated if result.final_output else False
+    # If not weather-related → trigger tripwire
+    is_weather = result.final_output.isWeatherRelated if result.final_output else False
 
     return GuardrailFunctionOutput(
         output_info=result.final_output,
-        tripwire_triggered=not is_poetry
+        tripwire_triggered=not is_weather
 )
 
 @function_tool
@@ -92,14 +92,14 @@ agent = Agent(
                 """,
     handoffs = [weather_Agent],
     handoff_description = "You need to handsoff to weather agent after welcome message appears",
-    # input_guardrails=[Weather_input_guardrail]
+    input_guardrails=[Weather_input_guardrail]
     )
 session = SQLiteSession("my_first_conversation")
 
 async def main():
     print("Hey I'm Your Weather Agent I Can tell you the current weather of any city of Pakistan based on your request.\n(Type 'stop' or 'exit' to quit)\n")
     while True:
-        user_input = input("Ask Me ABout Weather: ")
+        user_input = input("Ask Me About Weather: ")
         termination = ["stop", "exit"]
         if user_input.lower() in termination:
             print("👋 Goodbye! Weather Agent stopped.")
