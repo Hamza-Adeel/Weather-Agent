@@ -3,7 +3,6 @@ import requests
 from agents import Agent, Runner, RunConfig, OpenAIChatCompletionsModel, AsyncOpenAI, function_tool, SQLiteSession, input_guardrail, GuardrailFunctionOutput
 from dotenv import load_dotenv, find_dotenv
 import asyncio
-from fastapi import FastAPI
 from pydantic import BaseModel
 
 load_dotenv()
